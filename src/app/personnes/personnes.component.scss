@@ -1,0 +1,93 @@
+.diviser{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 80%;
+    margin: 0 auto;
+}
+
+.diviser2{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 95%;
+    margin: 0 auto;
+}
+
+.diviser2 div{
+    margin-left: 5%;
+}
+
+.diviser2{
+    margin:2%;
+    box-shadow: 0px 25px 42px rgba(0,0,0,0.2);
+}
+
+* {
+    box-sizing: border-box;
+  }
+  
+  form{
+    display:block;
+    margin: 0 auto;
+    width: 79%;
+  }
+  /* Style the search field */
+  form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    width: 80%;
+    background: #f1f1f1;
+  }
+  
+  /* Style the submit button */
+  form.example button {
+    width: 10%;
+    padding: 10px;
+    background: #000;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none; /* Prevent double borders */
+    cursor: pointer;
+  }
+  
+  #btnSubmit:hover {
+    background: red;
+  }
+
+  #btnDisabled{
+    background: grey;
+    cursor: not-allowed;
+  }
+  
+  
+  /* Clear floats */
+  form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+@media screen and (min-width: 721px) and (max-width: 1250px) {
+    .diviser2{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .diviser{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 569px) and (max-width: 720px) {
+    .diviser, .diviser2{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .diviser2{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .diviser{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

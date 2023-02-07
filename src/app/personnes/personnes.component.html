@@ -1,0 +1,35 @@
+<div class="wrapper">
+    <div class="page-header clear-filter" filter-color="black">
+      <div class="page-header-image rellax-header" data-rellax-speed="-7" style="background-image: url('assets/img/personnes.jpg');">
+  
+      </div>
+        <div class="container">
+            <div class="content-center brand">
+                <h1 class="h1-seo">Real Estate.</h1>
+                <h3>Retrouvez toutes les personnes clientes ou propriétaires sur cette page</h3>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <form class="example" action="#">
+      <input type="text" placeholder="Search Name.." name="search" [(ngModel)]="searchName">
+      <button id="btnSubmit" [ngStyle]="getWidth()" *ngIf="searchName!=''" (click)="searchByName()" type="submit" ><i class="fa fa-search" ></i></button>
+      <button id="btnDisabled" [ngStyle]="getWidth()" *ngIf="searchName==''" type="submit" ><i class="fa fa-search" ></i></button>
+      <button *ngIf="listPersonne.length != 20" (click)="reloadPersonne()" type="submit" style="width: 10%;"><i class="now-ui-icons loader_refresh" ></i></button>
+
+    </form>
+    <br><br>
+    <div class="diviser">
+      <div class="diviser2" *ngFor="let personne of listPersonne">
+          <img src='assets/img/Personne/{{personne.id_personne}}.PNG'>
+          <div style="text-align: center; margin-top: 30px;">
+            <i class="now-ui-icons users_single-02" style=" font-size: 55px;"></i>
+            <p style="margin-top:10px"><strong>Nom : </strong> {{personne.nom}} <br><strong>Adresse :</strong> {{personne.adresse}} </p>
+          </div>
+      </div>
+    </div>
+  <br><br>
+    
+  </div>
+  
+  
