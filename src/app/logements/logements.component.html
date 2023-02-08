@@ -11,75 +11,52 @@
         </div>
     </div>
     <br>
-    <form class="example" action="#">
-      <input type="text" placeholder="Search.." name="search">
-      <button type="submit"><i class="fa fa-search"></i></button>
+    <form class="example">
+      <input type="text" placeholder="Search.." name="search" [(ngModel)]="searchWord">
+      <button id="btnSubmit" [ngStyle]="getWidth()" *ngIf="searchWord!=''" type="submit" (click)="search()"><i class="fa fa-search" ></i></button>
+      <button id="btnDisabled" [ngStyle]="getWidth()" *ngIf="searchWord==''" ><i class="fa fa-search" ></i></button>
+      <button *ngIf="listLogement.length != 20" (click)="reloadLogement()" type="submit" style="width: 10%;"><i class="now-ui-icons loader_refresh" ></i></button>
     </form>
     <br>
-    <form class="example" action="#">
+    <form class="example" #form="ngForm" (ngSubmit)="searchAdvanced(form.value)">
       <div  class="diviser3">
-      <select name="type" style="width: 95%;margin: 2% 2% 2% 0%;">
+      <select name="type" style="width: 95%;margin: 2% 2% 2% 0%;" [(ngModel)]="type">
           <option value="">--Choisissez un type--</option>
           <option value="maison">Maison</option>
           <option value="appartement">Appartement</option>
       </select>
-      <input type="number" style="width: 95%;margin: 2% 2% 2% 0%;" placeholder="Nombre de pièces" name="nbPieces" step="1" min="1"/>
-      <input type="number" style="width: 95%;margin: 2% 2% 2% 0%;" placeholder="Surface" name="surface" step="1" min="1"/>
-      <select name="etat" style="width: 95%;margin: 2% 2% 2% 0%;">
+      <input type="number" style="width: 95%;margin: 2% 2% 2% 0%;" placeholder="Nombre de pièces" step="1" min="1" name="nbPiece" [(ngModel)]="nbPiece"/>
+      <input type="number" style="width: 95%;margin: 2% 2% 2% 0%;" placeholder="Surface" name="surface" step="1" min="1" [(ngModel)]="surface"/>
+      <select name="etat" style="width: 95%;margin: 2% 2% 2% 0%;" [(ngModel)]="etat">
           <option value="">--Choisissez un état--</option>
-          <option value="neuf">Neuf</option>
+          <option value="Neuf">Neuf</option>
           <option value="bonEtat">Bon état</option>
           <option value="TresBonEtat">Très bon état</option>
           <option value="ARenover">A rénover</option>
       </select>
-      <select name="type" style="width: 95%;margin: 2% 2% 2% 0%;">
+      <select name="objetGestion" style="width: 95%;margin: 2% 2% 2% 0%;" [(ngModel)]="objetGestion">
           <option value="">--Choisissez un objet--</option>
           <option value="Vente">Vente</option>
           <option value="Location">Location</option>
       </select>
-      <input type="number" style="width: 95%; margin: 2% 2% 2% 0%;" placeholder="Prix" name="prix" step="1" min="1"/><br>
+      <input style="width: 95%; margin: 2% 2% 2% 0%;" placeholder="Ville" name="ville" [(ngModel)]="ville"/>
+      <input type="number" style="width: 95%; margin: 2% 2% 2% 0%;" placeholder="Prix minimum" name="prixMinimum" step="1" min="1" [(ngModel)]="prixMinimum"/>
+      <input type="number" style="width: 95%; margin: 2% 2% 2% 0%;" placeholder="Prix maximum" name="prixMaximum" step="1" min="1" [(ngModel)]="prixMaximum"/>
+      <input type="date" style="width: 95%; margin: 2% 2% 2% 0%;" [(ngModel)]="dateDispo" placeholder="Date de disponibilité minimum" name="dateDispo"><br>
     </div>
-      <button type="submit" id="recherche">Recherche avancée</button>
+      <button id="btnSubmit2"  *ngIf="type!='' || nbPiece!=null || objetGestion!='' || etat!='' || prixMinimum!=null || prixMaximum!=null || surface!=null || ville!='' || dateDispo!=''" type="submit" >Recherche avancée</button>
+      <button id="btnDisabled2" *ngIf="type=='' && nbPiece==null && objetGestion=='' && etat=='' && prixMinimum==null && prixMaximum==null && surface==null && ville=='' && dateDispo==''" >Recherche avancée</button>
     </form>
     <br><br>
-    <div class="diviser">
-      <div class="diviser2">
-          <img src="assets/img/logements.jpg">
+    <div class="diviser" *ngIf="listLogement.length != 0">
+      <div class="diviser2" *ngFor="let logement of listLogement" >
+        <img src='assets/img/Logement/{{logement.id_Logement}}.jpg'>
           <div>
-            <p>Numéro de propriété : 2<br>Adresse : 18 rue de la vallée<br>Type : Vente<br>Nombre de pièces : 4<br>Etat : neuf<br>Superficie : 93m2<br>Prix : 330000€<br>Date de disponibilité : 18 janvier 2023<br>Ville : Paris</p>
+            <p><br><strong>Adresse : </strong> {{logement.adresse}}<br><strong>Type : </strong> {{logement.type}} <br><strong>Nombre de pièces : </strong> {{logement.nbPiece}}<br><strong>Etat : </strong> {{logement.etat}}<br><strong>Superficie : </strong> {{logement.surface}} m2<br><strong>Prix : </strong> {{logement.prix}} ({{logement.objetGestion}})<br><strong>Date de disponibilité : </strong>{{logement.dateDispo}}<br><strong>Ville : </strong> {{logement.ville}}<br><strong>Nom du propriétaire : </strong>{{logement.nomProprio}}</p>
           </div>
       </div>
-      <div class="diviser2">
-        <img src="assets/img/logements.jpg">
-        <div>
-          <p>Numéro de propriété : 2<br>Adresse : 18 rue de la vallée<br>Type : Vente<br>Nombre de pièces : 4<br>Etat : neuf<br>Superficie : 93m2<br>Prix : 330000€<br>Date de disponibilité : 18 janvier 2023<br>Ville : Paris</p>
-        </div>
-      </div>
-      <div class="diviser2">
-        <img src="assets/img/logements.jpg">
-        <div>
-          <p>Numéro de propriété : 2<br>Adresse : 18 rue de la vallée<br>Type : Vente<br>Nombre de pièces : 4<br>Etat : neuf<br>Superficie : 93m2<br>Prix : 330000€<br>Date de disponibilité : 18 janvier 2023<br>Ville : Paris</p>
-        </div>
-      </div >
-      <div class="diviser2">
-        <img src="assets/img/logements.jpg">
-        <div>
-          <p>Numéro de propriété : 2<br>Adresse : 18 rue de la vallée<br>Type : Vente<br>Nombre de pièces : 4<br>Etat : neuf<br>Superficie : 93m2<br>Prix : 330000€<br>Date de disponibilité : 18 janvier 2023<br>Ville : Paris</p>
-        </div>
-      </div>
-      <div class="diviser2">
-        <img src="assets/img/logements.jpg">
-        <div>
-          <p>Numéro de propriété : 2<br>Adresse : 18 rue de la vallée<br>Type : Vente<br>Nombre de pièces : 4<br>Etat : neuf<br>Superficie : 93m2<br>Prix : 330000€<br>Date de disponibilité : 18 janvier 2023<br>Ville : Paris</p>
-        </div>
-      </div>
-      <div class="diviser2">
-        <img src="assets/img/logements.jpg">
-        <div>
-          <p>Numéro de propriété : 2<br>Adresse : 18 rue de la vallée<br>Type : Vente<br>Nombre de pièces : 4<br>Etat : neuf<br>Superficie : 93m2<br>Prix : 330000€<br>Date de disponibilité : 18 janvier 2023<br>Ville : Paris</p>
-        </div>
-      </div>
     </div>
+    <h2 style="text-align: center;" *ngIf="listLogement.length == 0">Pas de données</h2>
   <br><br>
     
   </div>

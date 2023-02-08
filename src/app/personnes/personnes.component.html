@@ -19,7 +19,7 @@
 
     </form>
     <br><br>
-    <div class="diviser">
+    <div class="diviser" *ngIf="listPersonne.length != 0">
       <div class="diviser2" *ngFor="let personne of listPersonne">
           <img src='assets/img/Personne/{{personne.id_personne}}.PNG'>
           <div style="text-align: center; margin-top: 30px;">
@@ -28,6 +28,7 @@
           </div>
       </div>
     </div>
+    <h2 style="text-align: center;" *ngIf="listPersonne.length == 0">Pas de données</h2>
   <br><br>
     
   </div>
