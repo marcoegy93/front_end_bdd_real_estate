@@ -21,10 +21,19 @@ export class LogementsComponent implements OnInit {
   prixMaximum=null
   ville=''
   dateDispo=''
+  nbGarages=null
   constructor(private readonly _logementService: LogementsService) { }
 
   async ngOnInit() {
-    await this._logementService.getAllLogement().then((data) => this.listLogement = data)
+    await this._logementService.getAllLogement().then((data) => {
+      this.listLogement = data
+    })
+  }
+
+
+  dispo(date1){
+    if(date1)
+       return new Date(date1.toString()) < new Date()
   }
 
   async search(){
@@ -49,6 +58,7 @@ export class LogementsComponent implements OnInit {
     this.prixMaximum=null
     this.ville=''
     this.dateDispo=''
+    this.nbGarages=null
   }
 
   getWidth(){

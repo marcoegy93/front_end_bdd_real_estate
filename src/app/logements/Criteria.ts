@@ -1,11 +1,11 @@
 export class Criteria {
     type: string
-    nbPieces: string
-    surface: string
+    nbPieces: number
+    surface: number
     etat: string
     objetGestion: string
     ville: string
-    prixMinimum: string
-    prixMaximum: string
+    prixMinimum: number
+    prixMaximum: number
     dateDispo: string
 }

@@ -30,9 +30,9 @@
       <select name="etat" style="width: 95%;margin: 2% 2% 2% 0%;" [(ngModel)]="etat">
           <option value="">--Choisissez un état--</option>
           <option value="Neuf">Neuf</option>
-          <option value="bonEtat">Bon état</option>
-          <option value="TresBonEtat">Très bon état</option>
-          <option value="ARenover">A rénover</option>
+          <option value="Bon état">Bon état</option>
+          <option value="Très bon état">Très bon état</option>
+          <option value="À rénover">À rénover</option>
       </select>
       <select name="objetGestion" style="width: 95%;margin: 2% 2% 2% 0%;" [(ngModel)]="objetGestion">
           <option value="">--Choisissez un objet--</option>
@@ -42,18 +42,54 @@
       <input style="width: 95%; margin: 2% 2% 2% 0%;" placeholder="Ville" name="ville" [(ngModel)]="ville"/>
       <input type="number" style="width: 95%; margin: 2% 2% 2% 0%;" placeholder="Prix minimum" name="prixMinimum" step="1" min="1" [(ngModel)]="prixMinimum"/>
       <input type="number" style="width: 95%; margin: 2% 2% 2% 0%;" placeholder="Prix maximum" name="prixMaximum" step="1" min="1" [(ngModel)]="prixMaximum"/>
-      <input type="date" style="width: 95%; margin: 2% 2% 2% 0%;" [(ngModel)]="dateDispo" placeholder="Date de disponibilité minimum" name="dateDispo"><br>
+      <input type="number" style="width: 95%; margin: 2% 2% 2% 0%;" placeholder="Nombre de garages" name="nbGarages" step="1" min="1" [(ngModel)]="nbGarages"/>
     </div>
-      <button id="btnSubmit2"  *ngIf="type!='' || nbPiece!=null || objetGestion!='' || etat!='' || prixMinimum!=null || prixMaximum!=null || surface!=null || ville!='' || dateDispo!=''" type="submit" >Recherche avancée</button>
-      <button id="btnDisabled2" *ngIf="type=='' && nbPiece==null && objetGestion=='' && etat=='' && prixMinimum==null && prixMaximum==null && surface==null && ville=='' && dateDispo==''" >Recherche avancée</button>
+      <button id="btnSubmit2"  *ngIf="type!='' || nbPiece!=null || objetGestion!='' || etat!='' || prixMinimum!=null || prixMaximum!=null || surface!=null || ville!='' || nbGarages!=null" type="submit" >Recherche avancée</button>
+      <button id="btnDisabled2" *ngIf="type=='' && nbPiece==null && objetGestion=='' && etat=='' && prixMinimum==null && prixMaximum==null && surface==null && ville=='' && nbGarages==null" >Recherche avancée</button>
     </form>
     <br><br>
     <div class="diviser" *ngIf="listLogement.length != 0">
-      <div class="diviser2" *ngFor="let logement of listLogement" >
-        <img src='assets/img/Logement/{{logement.id_Logement}}.jpg'>
-          <div>
-            <p><br><strong>Adresse : </strong> {{logement.adresse}}<br><strong>Type : </strong> {{logement.type}} <br><strong>Nombre de pièces : </strong> {{logement.nbPiece}}<br><strong>Etat : </strong> {{logement.etat}}<br><strong>Superficie : </strong> {{logement.surface}} m2<br><strong>Prix : </strong> {{logement.prix}} ({{logement.objetGestion}})<br><strong>Date de disponibilité : </strong>{{logement.dateDispo}}<br><strong>Ville : </strong> {{logement.ville}}<br><strong>Nom du propriétaire : </strong>{{logement.nomProprio}}</p>
+      <div class="cardLogement" *ngFor="let logement of listLogement" >
+        <div *ngIf="dispo(logement.dateDispo)">
+          <img src='assets/img/Logement/{{logement.id_Logement}}.jpg'>
+          <div *ngIf="logement.objetGestion == 'Vente' && logement.commission > 0">
+            <div *ngIf="logement.lastVisite">
+            <p><br><strong>Adresse : </strong> {{logement.adresse}}<br><strong>Type : </strong> {{logement.type}} <br><strong>Nombre de pièces : </strong> {{logement.nbPiece}}<br><strong>Etat : </strong> {{logement.etat}}<br><strong>Superficie : </strong> {{logement.surface}} m2<br><strong>Prix : </strong> {{logement.prix}} € ({{logement.objetGestion}})<br><strong>Ville : </strong> {{logement.ville}}<br><strong>Nom du propriétaire : </strong>{{logement.nomProprio}}<br><strong>Nombre de garages : </strong>{{logement.nbGarages}}<br><strong>Dernière commission perçue</strong> : {{logement.commission}} €<br><strong>Dernière Visite</strong> : {{logement.lastVisite | date}}<br><br><br><br><p style="color:darkgreen; text-align: center;"><strong>Logement disponible ! </strong></p></p>
+            </div>
+            <div *ngIf="!logement.lastVisite">
+              <p><br><strong>Adresse : </strong> {{logement.adresse}}<br><strong>Type : </strong> {{logement.type}} <br><strong>Nombre de pièces : </strong> {{logement.nbPiece}}<br><strong>Etat : </strong> {{logement.etat}}<br><strong>Superficie : </strong> {{logement.surface}} m2<br><strong>Prix : </strong> {{logement.prix}} € ({{logement.objetGestion}})<br><strong>Ville : </strong> {{logement.ville}}<br><strong>Nom du propriétaire : </strong>{{logement.nomProprio}}<br><strong>Nombre de garages : </strong>{{logement.nbGarages}}<br><strong>Dernière commission perçue</strong> : {{logement.commission}} €<br><br><br><br><p style="color:darkgreen; text-align: center;"><strong>Logement disponible ! </strong></p></p>
+              </div>
           </div>
+          <div *ngIf="logement.objetGestion != 'Vente' || logement.commission == 0">
+            <div *ngIf="logement.lastVisite">
+            <p><br><strong>Adresse : </strong> {{logement.adresse}}<br><strong>Type : </strong> {{logement.type}} <br><strong>Nombre de pièces : </strong> {{logement.nbPiece}}<br><strong>Etat : </strong> {{logement.etat}}<br><strong>Superficie : </strong> {{logement.surface}} m2<br><strong>Prix : </strong> {{logement.prix}} € ({{logement.objetGestion}})<br><strong>Ville : </strong> {{logement.ville}}<br><strong>Nom du propriétaire : </strong>{{logement.nomProprio}}<br><strong>Nombre de garages : </strong>{{logement.nbGarages}}<br><strong>Dernière visite</strong> : {{logement.lastVisite | date}}<br><br><br><br><p style="color:darkgreen; text-align: center;"><strong>Logement disponible ! </strong></p></p>
+            </div>
+            <div *ngIf="!logement.lastVisite">
+              <p><br><strong>Adresse : </strong> {{logement.adresse}}<br><strong>Type : </strong> {{logement.type}} <br><strong>Nombre de pièces : </strong> {{logement.nbPiece}}<br><strong>Etat : </strong> {{logement.etat}}<br><strong>Superficie : </strong> {{logement.surface}} m2<br><strong>Prix : </strong> {{logement.prix}} € ({{logement.objetGestion}})<br><strong>Ville : </strong> {{logement.ville}}<br><strong>Nom du propriétaire : </strong>{{logement.nomProprio}}<br><strong>Nombre de garages : </strong>{{logement.nbGarages}}<br><br><br><br><br><p style="color:darkgreen; text-align: center;"><strong>Logement disponible ! </strong></p></p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!dispo(logement.dateDispo)" style="background-color: rgb(204, 200, 200);height: 100%">
+          <img style="webkit-filter:grayscale(100%);filter: grayscale(100%)" src='assets/img/Logement/{{logement.id_Logement}}.jpg'>
+          <div>
+            <div *ngIf="logement.objetGestion == 'Vente' && logement.commission > 0">
+              <div *ngIf="logement.lastVisite">
+                <p><br><strong>Adresse : </strong> {{logement.adresse}}<br><strong>Type : </strong> {{logement.type}} <br><strong>Nombre de pièces : </strong> {{logement.nbPiece}}<br><strong>Etat : </strong> {{logement.etat}}<br><strong>Superficie : </strong> {{logement.surface}} m2<br><strong>Prix : </strong> {{logement.prix}} € ({{logement.objetGestion}})<br><strong>Ville : </strong> {{logement.ville}}<br><strong>Nom du propriétaire : </strong>{{logement.nomProprio}}<br><strong>Nombre de garages : </strong>{{logement.nbGarages}}<br><strong>Dernière commission perçue</strong> : {{logement.commission}} €<br><strong>Dernière visite</strong> : {{logement.lastVisite | date}}<br><strong>Disponible à partir du </strong> : {{logement.dateDispo |date}}<br><br><p style="color:red; text-align: center;"><strong>Logement indisponible ! </strong></p></p>
+              </div>
+              <div *ngIf="!logement.lastVisite">
+                <p><br><strong>Adresse : </strong> {{logement.adresse}}<br><strong>Type : </strong> {{logement.type}} <br><strong>Nombre de pièces : </strong> {{logement.nbPiece}}<br><strong>Etat : </strong> {{logement.etat}}<br><strong>Superficie : </strong> {{logement.surface}} m2<br><strong>Prix : </strong> {{logement.prix}} € ({{logement.objetGestion}})<br><strong>Ville : </strong> {{logement.ville}}<br><strong>Nom du propriétaire : </strong>{{logement.nomProprio}}<br><strong>Nombre de garages : </strong>{{logement.nbGarages}}<br><strong>Dernière commission perçue</strong> : {{logement.commission}} €<br><strong>Disponible à partir du </strong> : {{logement.dateDispo |date}}<br><br><p style="color:red; text-align: center;"><strong>Logement indisponible ! </strong></p></p>
+              </div>
+              </div>
+            <div *ngIf="logement.objetGestion != 'Vente' || logement.commission == 0">
+              <div *ngIf="logement.lastVisite">
+              <p><br><strong>Adresse : </strong> {{logement.adresse}}<br><strong>Type : </strong> {{logement.type}} <br><strong>Nombre de pièces : </strong> {{logement.nbPiece}}<br><strong>Etat : </strong> {{logement.etat}}<br><strong>Superficie : </strong> {{logement.surface}} m2<br><strong>Prix : </strong> {{logement.prix}} € ({{logement.objetGestion}})<br><strong>Ville : </strong> {{logement.ville}}<br><strong>Nom du propriétaire : </strong>{{logement.nomProprio}}<br><strong>Nombre de garages : </strong>{{logement.nbGarages}}<br><strong>Dernière visite</strong> : {{logement.lastVisite | date}}<br><strong>Disponible à partir du </strong> : {{logement.dateDispo |date}}<br><br><br><p style="color:red; text-align: center;"><strong>Logement indisponible ! </strong></p></p>
+              </div>
+              <div *ngIf="!logement.lastVisite">
+                <p><br><strong>Adresse : </strong> {{logement.adresse}}<br><strong>Type : </strong> {{logement.type}} <br><strong>Nombre de pièces : </strong> {{logement.nbPiece}}<br><strong>Etat : </strong> {{logement.etat}}<br><strong>Superficie : </strong> {{logement.surface}} m2<br><strong>Prix : </strong> {{logement.prix}} € ({{logement.objetGestion}})<br><strong>Ville : </strong> {{logement.ville}}<br><strong>Nom du propriétaire : </strong>{{logement.nomProprio}}<br><strong>Nombre de garages : </strong>{{logement.nbGarages}}<br><strong>Disponible à partir du </strong> : {{logement.dateDispo |date}}<br><br><br><br><p style="color:red; text-align: center;"><strong>Logement indisponible ! </strong></p></p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <h2 style="text-align: center;" *ngIf="listLogement.length == 0">Pas de données</h2>

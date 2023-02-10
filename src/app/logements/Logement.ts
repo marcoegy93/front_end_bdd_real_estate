@@ -7,7 +7,10 @@ export class Logement {
     etat: string
     objetGestion: string
     prix: number
-    dateDispo: string
+    dateDispo: Date
     ville: string
     nomProprio: string
+    nbGarages: number
+    commission: number
+    lastVisite: Date
 }

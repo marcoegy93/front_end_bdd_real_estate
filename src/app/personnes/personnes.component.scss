@@ -13,7 +13,11 @@
 }
 
 .diviser2 div{
-    margin-left: 5%;
+    margin: 2%;
+}
+
+.diviser2 img{
+  width: 100%;
 }
 
 .diviser2{
@@ -68,19 +72,40 @@
     display: table;
   }
 
-@media screen and (min-width: 721px) and (max-width: 1250px) {
-    .diviser2{
-        grid-template-columns: repeat(2, 1fr);
-    }
+@media screen and (min-width: 1250px) and (max-width: 1500px) {
     .diviser{
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(5, 1fr);
+    }
+    .diviser2{
+        grid-template-columns: repeat(1, 1fr);
     }
 }
 
-@media screen and (min-width: 569px) and (max-width: 720px) {
-    .diviser, .diviser2{
-        grid-template-columns: repeat(2, 1fr);
+@media screen and (min-width: 992px) and (max-width: 1250px) {
+    .diviser2{
+        grid-template-columns: repeat(1, 1fr);
     }
+    .diviser{
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (min-width: 721px) and (max-width: 991px) {
+  .diviser2{
+      grid-template-columns: repeat(1, 1fr);
+  }
+  .diviser{
+      grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (min-width: 569px) and (max-width: 720px) {
+    .diviser2{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .diviser{
+      grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media screen and (max-width: 568px) {
@@ -88,6 +113,6 @@
         grid-template-columns: repeat(1, 1fr);
     }
     .diviser{
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
 }
