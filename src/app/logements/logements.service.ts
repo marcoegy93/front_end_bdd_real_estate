@@ -7,7 +7,7 @@ import { Logement } from './Logement';
   providedIn: 'root'
 })
 export class LogementsService {
-  readonly ApiUrl = "https://localhost:7073/api/Logement/"
+  readonly ApiUrl = "https://backendbdd.fly.dev/api/Logement/"
   constructor(private http: HttpClient) { }
 
   async getAllLogement() : Promise<Logement[]>{

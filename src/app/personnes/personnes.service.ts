@@ -7,7 +7,7 @@ import { Personne } from 'app/personnes/Personne';
 })
 export class PersonnesService {
 
-  readonly ApiUrl = "https://localhost:7073/api/Personne/"
+  readonly ApiUrl = "https://backendbdd.fly.dev/api/Personne/"
   constructor(private http: HttpClient) { }
 
 
